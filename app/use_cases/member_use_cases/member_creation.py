@@ -8,5 +8,5 @@ class MemberCreationUseCase:
         self.member_repository = member_repository
 
     def add_member(self, member_data: MemberInputDTO):
-        member = Member(**member_data)
+        member = Member(**member_data.model_dump())
         return self.member_repository.create_member(member)
