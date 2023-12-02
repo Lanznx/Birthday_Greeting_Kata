@@ -14,3 +14,8 @@ class MemberInputDTO(BaseModel):
         if value > date.today():
             raise ValueError("Date of Birth cannot be in the future")
         return value
+
+
+class MemberOutputDTO(BaseModel):
+    message: str
+    user_id: int
