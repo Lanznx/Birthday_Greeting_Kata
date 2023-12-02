@@ -26,9 +26,3 @@ class Member(BaseModel):
                 < (self.date_of_birth.month, self.date_of_birth.day)
             )
         )
-
-    def is_birthday(self, today) -> bool:
-        return (
-            today.month == self.date_of_birth.month
-            and today.day == self.date_of_birth.day
-        )
