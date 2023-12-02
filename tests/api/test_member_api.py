@@ -20,7 +20,7 @@ def test_member_creation():
 
     response_data = response.json()
     assert response_data["message"] == "Member created successfully"
-    assert "user_id" in response_data
+    assert "member_id" in response_data
 
 
 def test_member_creation_with_missing_data():

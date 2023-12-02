@@ -14,7 +14,9 @@ def member_creation(member: MemberInputDTO):
     try:
         member_repository: IMemberRepository = get_member_repository()
         use_case = MemberCreationUseCase(member_repository)
-        user_id = use_case.add_member(member)
-        return MemberOutputDTO(message="Member created successfully", user_id=user_id)
+        member_id = use_case.add_member(member)
+        return MemberOutputDTO(
+            message="Member created successfully", member_id=member_id
+        )
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

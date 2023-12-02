@@ -18,4 +18,4 @@ class MemberInputDTO(BaseModel):
 
 class MemberOutputDTO(BaseModel):
     message: str
-    user_id: int
+    member_id: int
