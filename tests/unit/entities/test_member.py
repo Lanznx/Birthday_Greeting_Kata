@@ -1,4 +1,5 @@
-from datetime import date
+from datetime import timedelta, date
+import pytest
 from app.entities.member import Member
 
 
@@ -41,3 +42,47 @@ def test_member_is_birthday():
     assert member.is_birthday(date(2023, 1, 1)) is True
     # 假設今天是 1 月 2 日
     assert member.is_birthday(date(2023, 1, 2)) is False
+
+
+def test_future_birth_date():
+    future_date = date.today() + timedelta(days=1)
+    with pytest.raises(ValueError) as excinfo:
+        Member(
+            first_name="Jane",
+            last_name="Doe",
+            gender="Female",
+            date_of_birth=future_date,
+            email="jane.doe@example.com",
+        )
+    assert "Date of Birth cannot be in the future" in str(excinfo.value)
+
+
+def test_invalid_email():
+    with pytest.raises(ValueError):
+        Member(
+            first_name="John",
+            last_name="Doe",
+            gender="Male",
+            date_of_birth="1990-01-01",
+            email="invalid-email",
+        )
+
+
+def test_invalid_name():
+    with pytest.raises(ValueError):
+        Member(
+            first_name="",  # Invalid first name
+            last_name="Doe",
+            gender="Male",
+            date_of_birth="1990-01-01",
+            email="john.doe@example.com",
+        )
+
+    with pytest.raises(ValueError):
+        Member(
+            first_name="John",
+            last_name="",
+            gender="Male",
+            date_of_birth="1990-01-01",
+            email="john.doe@example.com",
+        )
