@@ -1,5 +1,6 @@
 from app.use_cases.ports.member_repository import IMemberRepository
 from app.use_cases.ports.greeting_service import IGreetingService
+from datetime import date
 
 
 class SendBirthdayGreetingUseCase:
@@ -9,8 +10,8 @@ class SendBirthdayGreetingUseCase:
         self.member_repository = member_repository
         self.greeting_service = greeting_service
 
-    def execute(self):
-        members = self.member_repository.get_members_with_birthday_today()
+    def execute(self, today: date):
+        members = self.member_repository.get_members_with_birthday_today(today)
         for member in members:
             message = self.greeting_service.generate_greeting_message(member)
             self.greeting_service.send_greeting(member, message)

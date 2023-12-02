@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from datetime import date
 from typing import List
 from app.entities.member import Member
 
@@ -9,5 +10,5 @@ class IMemberRepository(ABC):
         pass
 
     @abstractmethod
-    def get_members_with_birthday_today(self) -> List[Member]:
+    def get_members_with_birthday_today(self, today: date) -> List[Member]:
         pass
