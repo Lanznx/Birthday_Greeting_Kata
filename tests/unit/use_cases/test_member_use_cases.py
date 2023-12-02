@@ -44,7 +44,7 @@ def test_add_member(member_creation_use_case, member_repository_mock):
 
 
 @pytest.mark.parametrize("email", ["invalid-email", "test@test", ""])
-def test_add_member_with_invalid_email(member_creation_use_case, email):
+def test_add_member_with_invalid_email(email):
     with pytest.raises(pydantic.ValidationError) as excinfo:
         MemberInputDTO(
             first_name="Invalid",
@@ -56,7 +56,7 @@ def test_add_member_with_invalid_email(member_creation_use_case, email):
     assert "value is not a valid email address" in str(excinfo.value)
 
 
-def test_add_member_with_future_date(member_creation_use_case):
+def test_add_member_with_future_date():
     future_date = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
     with pytest.raises(pydantic.ValidationError) as excinfo:
         MemberInputDTO(
@@ -70,8 +70,8 @@ def test_add_member_with_future_date(member_creation_use_case):
 
 
 @pytest.mark.parametrize("first_name, last_name", [("", "Doe"), ("John", "")])
-def test_add_member_with_empty_name(member_creation_use_case, first_name, last_name):
-    with pytest.raises(pydantic.ValidationError) as excinfo:
+def test_add_member_with_empty_name(first_name, last_name):
+    with pytest.raises(pydantic.ValidationError):
         MemberInputDTO(
             first_name=first_name,
             last_name=last_name,
