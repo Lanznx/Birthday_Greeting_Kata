@@ -1,7 +1,7 @@
 import pytest
 import pydantic
-from datetime import datetime, timedelta, date
-from unittest.mock import Mock
+from datetime import datetime, timedelta
+from unittest.mock import create_autospec
 from app.entities.member import Member
 from app.use_cases.member_use_cases.member_creation import MemberCreationUseCase
 from app.use_cases.ports.member_repository import IMemberRepository
@@ -10,7 +10,7 @@ from app.use_cases.dtos.member_dto import MemberInputDTO
 
 @pytest.fixture
 def member_repository_mock():
-    return Mock(spec=IMemberRepository)
+    return create_autospec(IMemberRepository)
 
 
 @pytest.fixture
