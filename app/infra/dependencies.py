@@ -5,6 +5,7 @@ from app.use_cases.ports.picture_service import IPictureService
 from app.adapters.services.greeting_service_v1 import GreetingServiceV1
 from app.adapters.services.greeting_service_v2 import GreetingServiceV2
 from app.adapters.services.greeting_service_v3 import GreetingServiceV3
+from app.adapters.services.greeting_service_v4 import GreetingServiceV4
 from app.adapters.services.picture_service import PictureService
 
 
@@ -20,6 +21,8 @@ def get_greeting_service(version) -> IGreetingService:
         return GreetingServiceV2()
     elif version == "v3":
         return GreetingServiceV3(get_picture_service())
+    elif version == "v4":
+        return GreetingServiceV4()
 
 
 def get_picture_service() -> IPictureService:
