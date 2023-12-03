@@ -1,9 +1,15 @@
 import uvicorn
 from fastapi import FastAPI
 from app.infra.web.router import setup_routers
+from app.infra.db.database import create_tables
 
 app = FastAPI()
 setup_routers(app)
+
+
+@app.on_event("startup")
+async def startup():
+    create_tables()
 
 
 @app.get("/")
