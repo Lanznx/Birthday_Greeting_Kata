@@ -107,9 +107,6 @@ def send_birthday_greetings_v5(
         greeting_service: IGreetingService = get_greeting_service("v1")
         use_case = SendBirthdayGreetingUseCase(member_repository, greeting_service)
         greetings = use_case.execute(today.current_date)
-        print("v5" * 100)
-        print(greetings)
-
         if not greetings:
             raise HTTPException(status_code=404, detail="No birthdays found today.")
         return BirthdayGreetingOutputDTOV1(
