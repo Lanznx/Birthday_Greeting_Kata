@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,5 +40,5 @@ jobs:
       run: docker build -t greeting:latest .
 
     - name: Run tests
-      run: docker run --rm -e SKIP_APT_TESTS=true greeting:latest bash scripts/run_test.sh
+      run: docker run --rm -e SKIP_API_TESTS=true greeting:latest bash scripts/run_test.sh
 
