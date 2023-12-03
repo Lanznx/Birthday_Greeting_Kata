@@ -3,8 +3,8 @@ from typing import List
 from datetime import date
 from app.entities.member import Member
 from app.use_cases.ports.member_repository import IMemberRepository
-from app.infra.db.model import MemberModel
-from app.infra.db.database import SessionLocal
+from app.infra.db.mysql.model import MemberModel
+from app.infra.db.mysql.database import SessionLocal
 
 
 class MySQLMemberRepository(IMemberRepository):

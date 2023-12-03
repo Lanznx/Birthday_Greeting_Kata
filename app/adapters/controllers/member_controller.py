@@ -13,7 +13,7 @@ member_routes = APIRouter(tags=["member"], prefix="/member")
 
 
 @member_routes.post("/", status_code=status.HTTP_201_CREATED)
-def member_creation(member: MemberInputDTO):
+def member_creation(member: MemberInputDTO) -> MemberOutputDTO:
     try:
         member_repository: IMemberRepository = get_member_repository()
         use_case = MemberCreationUseCase(member_repository)
@@ -26,9 +26,35 @@ def member_creation(member: MemberInputDTO):
 
 
 @member_routes.delete("/{member_id}", status_code=status.HTTP_200_OK)
-def member_deletion(member_id: str):
+def member_deletion(member_id: str) -> MemberOutputDTO:
     try:
         member_repository: IMemberRepository = get_member_repository()
+        use_case = MemberDeletionUseCase(member_repository)
+        member_id = use_case.delete_member(member_id)
+        return MemberOutputDTO(
+            message="Member deleted successfully", member_id=member_id
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@member_routes.post("/mongo", status_code=status.HTTP_201_CREATED)
+def member_creation(member: MemberInputDTO) -> MemberOutputDTO:
+    try:
+        member_repository: IMemberRepository = get_member_repository("mongodb")
+        use_case = MemberCreationUseCase(member_repository)
+        member_id = use_case.add_member(member)
+        return MemberOutputDTO(
+            message="Member created successfully", member_id=member_id
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@member_routes.delete("/{member_id}/mongo", status_code=status.HTTP_200_OK)
+def member_deletion(member_id: str) -> MemberOutputDTO:
+    try:
+        member_repository: IMemberRepository = get_member_repository("mongodb")
         use_case = MemberDeletionUseCase(member_repository)
         member_id = use_case.delete_member(member_id)
         return MemberOutputDTO(
