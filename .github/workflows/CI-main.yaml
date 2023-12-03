@@ -7,7 +7,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
 
@@ -39,9 +38,5 @@ jobs:
     - name: Build Docker image & Run tests
       run: |
         docker build -t greeting:latest .
-        export SKIP_API_TESTS=true
-        echo "SKIP_API_TESTS"
-        echo $SKIP_API_TESTS
-        echo $SKIP_API_TESTS
-        docker run --rm -e SKIP_API_TESTS=true greeting:latest bash -c "bash scripts/run_test.sh"
+        docker run --rm -e SKIP_API_TESTS=true greeting:latest bash -c "export PYTHONPATH=../Birthday_Greeting_Kata && pytest"
 
