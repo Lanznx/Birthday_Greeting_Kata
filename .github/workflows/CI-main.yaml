@@ -40,4 +40,5 @@ jobs:
       run: docker build -t greeting:latest .
 
     - name: Run tests
-      run: docker run --rm greeting:latest bash export RUN_API_TESTS=false && scripts/run_test.sh
+      run: docker run --rm -e RUN_API_TESTS=false greeting:latest bash scripts/run_test.sh
+
