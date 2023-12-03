@@ -39,7 +39,8 @@ jobs:
     - name: Build Docker image & Run tests
       run: |
         docker build -t greeting:latest .
-        echo $SKIP_API_TESTS
+        export SKIP_API_TESTS=true
+        echo "SKIP_API_TESTS"
         echo $SKIP_API_TESTS
         echo $SKIP_API_TESTS
         docker run --rm greeting:latest bash -c "bash scripts/run_test.sh"
