@@ -13,11 +13,9 @@ member_routes = APIRouter(tags=["member"], prefix="/member")
 
 
 @member_routes.post("/", status_code=status.HTTP_201_CREATED)
-def member_creation(
-    member: MemberInputDTO,
-    member_repository: IMemberRepository = Depends(get_member_repository),
-):
+def member_creation(member: MemberInputDTO):
     try:
+        member_repository: IMemberRepository = get_member_repository()
         use_case = MemberCreationUseCase(member_repository)
         member_id = use_case.add_member(member)
         return MemberOutputDTO(
@@ -28,11 +26,9 @@ def member_creation(
 
 
 @member_routes.delete("/{member_id}", status_code=status.HTTP_200_OK)
-def member_deletion(
-    member_id: str,
-    member_repository: IMemberRepository = Depends(get_member_repository),
-):
+def member_deletion(member_id: str):
     try:
+        member_repository: IMemberRepository = get_member_repository()
         use_case = MemberDeletionUseCase(member_repository)
         member_id = use_case.delete_member(member_id)
         return MemberOutputDTO(
