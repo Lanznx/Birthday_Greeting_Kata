@@ -5,7 +5,7 @@ from datetime import date
 import pytest
 import os
 
-should_run_api_tests = os.getenv("RUN_API_TESTS", "false").lower() == "false"
+should_not_run_api_tests = os.getenv("SKIP_API_TESTS", "false").lower() == "true"
 
 client = TestClient(app)
 
@@ -14,7 +14,8 @@ class TestMemberLifecycle:
     member_id = None
 
     @pytest.mark.skipif(
-        not should_run_api_tests, reason="API tests are disabled in this environment"
+        should_not_run_api_tests,
+        reason="API tests are disabled in this environment",
     )
     def test_member_creation(self):
         member_data = {
@@ -31,7 +32,8 @@ class TestMemberLifecycle:
         TestMemberLifecycle.member_id = response_data["member_id"]
 
     @pytest.mark.skipif(
-        not should_run_api_tests, reason="API tests are disabled in this environment"
+        should_not_run_api_tests,
+        reason="API tests are disabled in this environment",
     )
     def test_member_deletion(self):
         if TestMemberLifecycle.member_id is None:
@@ -44,7 +46,8 @@ class TestMemberLifecycle:
         assert delete_response_data["member_id"] == TestMemberLifecycle.member_id
 
     @pytest.mark.skipif(
-        not should_run_api_tests, reason="API tests are disabled in this environment"
+        should_not_run_api_tests,
+        reason="API tests are disabled in this environment",
     )
     def test_member_creation_with_future_birth_date(self):
         future_date = str(date.today().replace(year=date.today().year + 1))
@@ -62,7 +65,8 @@ class TestMemberLifecycle:
         assert "detail" in response.json()
 
     @pytest.mark.skipif(
-        not should_run_api_tests, reason="API tests are disabled in this environment"
+        should_not_run_api_tests,
+        reason="API tests are disabled in this environment",
     )
     def test_member_creation_with_invalid_email(self):
         member_data = {
