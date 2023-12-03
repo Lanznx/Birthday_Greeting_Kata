@@ -2,6 +2,9 @@
 Pre-assignment from LINE interview.
 
 ## Clean Architecture
+### link of the slide - - - > https://tinyurl.com/clean-arc
+### About me - - - > https://tinyurl.com/self-introo
+
 ![Pre-assignment Clean Arcitecture](https://github.com/Lanznx/Birthday_Greeting_Kata/assets/96360357/df4f79c6-dba1-455d-b747-330ee1e0fb01)
 
 
