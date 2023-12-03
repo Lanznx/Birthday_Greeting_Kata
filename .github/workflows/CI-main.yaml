@@ -36,9 +36,8 @@ jobs:
       run: |
         poetry export --output requirements.txt 
 
-    - name: Build Docker image
-      run: docker build -t greeting:latest .
-
-    - name: Run tests
-      run: docker run --rm greeting:latest bash -c "export SKIP_API_TESTS=true && bash scripts/run_test.sh"
+    - name: Build Docker image & Run tests
+      run: |
+        docker build -t greeting:latest .
+        docker run --rm greeting:latest bash -c "export SKIP_API_TESTS=true && bash scripts/run_test.sh"
 
