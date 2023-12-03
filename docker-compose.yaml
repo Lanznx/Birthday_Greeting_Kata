@@ -13,6 +13,19 @@ services:
       - mysql-data:/var/lib/mysql
     networks:
       - greeting-network
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - greeting-network
 
   # server:
   #   build: 
@@ -24,6 +37,7 @@ services:
 
 volumes:
   mysql-data:
+  mongo-data:
    
 networks:
   greeting-network:
