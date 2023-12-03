@@ -40,5 +40,5 @@ jobs:
       run: docker build -t greeting:latest .
 
     - name: Run tests
-      run: docker run --rm -e SKIP_API_TESTS=true greeting:latest bash scripts/run_test.sh
+      run: docker run --rm greeting:latest bash -c "export SKIP_API_TESTS=true && bash scripts/run_tests.sh"
 
