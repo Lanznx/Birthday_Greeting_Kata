@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class BirthdayGreetingDTO(BaseModel):
+class BirthdayGreetingDTOV1(BaseModel):
     recipient_email: str
     subject: str
     message: str
