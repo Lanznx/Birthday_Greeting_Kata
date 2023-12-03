@@ -21,5 +21,30 @@ class MySQLMemberRepository(IMemberRepository):
             session.refresh(member_model)
         return member_model.id
 
+    def get_member(self, member_id: str) -> Member:
+        with SessionLocal() as session:
+            session_member = session.query(MemberModel).filter_by(id=member_id).first()
+            if session_member is None:
+                return None
+            return self._convert_to_member(session_member)
+
+    def delete_member(self, member_id: str) -> int:
+        with SessionLocal() as session:
+            session_member = session.query(MemberModel).filter_by(id=member_id).first()
+            if session_member is None:
+                return None
+            session.delete(session_member)
+            session.commit()
+            return session_member.id
+
+    def _convert_to_member(self, member_model: MemberModel) -> Member:
+        return Member(
+            first_name=member_model.first_name,
+            last_name=member_model.last_name,
+            gender=member_model.gender,
+            date_of_birth=member_model.date_of_birth,
+            email=member_model.email,
+        )
+
     def get_members_with_birthday_today(self, today: date) -> List[Member]:
         pass
