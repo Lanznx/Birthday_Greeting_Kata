@@ -99,7 +99,7 @@ def send_birthday_greetings_v4(
 
 
 @greeting_routes.post("/v5/birthday", status_code=status.HTTP_200_OK)
-def send_birthday_greetings_v4(
+def send_birthday_greetings_v5(
     today: BirthdayGreetingInputDTO,
 ) -> BirthdayGreetingOutputDTOV1:
     try:
@@ -107,9 +107,12 @@ def send_birthday_greetings_v4(
         greeting_service: IGreetingService = get_greeting_service("v1")
         use_case = SendBirthdayGreetingUseCase(member_repository, greeting_service)
         greetings = use_case.execute(today.current_date)
+        print("v5" * 100)
+        print(greetings)
+
         if not greetings:
             raise HTTPException(status_code=404, detail="No birthdays found today.")
-        return BirthdayGreetingOutputDTOV4(
+        return BirthdayGreetingOutputDTOV1(
             message="Birthday greetings sent successfully", greetings=greetings
         )
     except HTTPException as http_exc:
