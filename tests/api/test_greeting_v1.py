@@ -4,13 +4,13 @@ from datetime import date
 import pytest
 import os
 
-should_not_run_api_tests = os.getenv("SKIP_API_TESTS", "false").lower() == "true"
+should_run_api_tests = os.getenv("RUN_API_TESTS", "false").lower() == "true"
 
 client = TestClient(app)
 
 
 @pytest.mark.skipif(
-    should_not_run_api_tests, reason="API tests are disabled in this environment"
+    not should_run_api_tests, reason="API tests are disabled in this environment"
 )
 def test_send_birthday_greetings_v1():
     today = date.today()
