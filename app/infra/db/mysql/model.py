@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date
-from app.infra.db.database import Base
+from app.infra.db.mysql.database import Base
 
 
 class MemberModel(Base):
