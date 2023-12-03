@@ -6,7 +6,7 @@ from app.entities.member import Member
 
 class IMemberRepository(ABC):
     @abstractmethod
-    def create_member(self, member: Member) -> Member:
+    def create_member(self, member: Member) -> int:
         pass
 
     @abstractmethod
