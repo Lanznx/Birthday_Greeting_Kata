@@ -35,6 +35,8 @@ jobs:
       shell: bash
       run: |
         poetry export --output requirements.txt
+      env:
+        RUN_API_TESTS: true
 
     - name: Build Docker image
       run: docker build -t greeting:latest .
