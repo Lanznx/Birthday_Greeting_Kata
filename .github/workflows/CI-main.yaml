@@ -34,12 +34,10 @@ jobs:
     - name: Export requirements.txt from poetry.lock
       shell: bash
       run: |
-        poetry export --output requirements.txt
-      env:
-        RUN_API_TESTS: false
+        poetry export --output requirements.txt 
 
     - name: Build Docker image
       run: docker build -t greeting:latest .
 
     - name: Run tests
-      run: docker run --rm greeting:latest bash scripts/run_test.sh
+      run: docker run --rm greeting:latest bash export RUN_API_TESTS=false && scripts/run_test.sh
