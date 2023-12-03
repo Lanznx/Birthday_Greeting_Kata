@@ -1,6 +1,4 @@
-# Birthday_Greeting_Kata
-Pre-assignment from LINE interview.
-
+# Pre-assignment
 ## Clean Architecture
 ### link of the slide - - - > https://tinyurl.com/clean-arc
 ### About me - - - > https://tinyurl.com/self-introo
