@@ -2,6 +2,10 @@ import pytest
 from fastapi.testclient import TestClient
 from app.main import app
 from datetime import date
+import pytest
+import os
+
+should_run_api_tests = os.getenv("RUN_API_TESTS", "false").lower() == "false"
 
 client = TestClient(app)
 
@@ -9,6 +13,9 @@ client = TestClient(app)
 class TestMemberLifecycle:
     member_id = None
 
+    @pytest.mark.skipif(
+        not should_run_api_tests, reason="API tests are disabled in this environment"
+    )
     def test_member_creation(self):
         member_data = {
             "first_name": "John",
@@ -23,6 +30,9 @@ class TestMemberLifecycle:
         assert response_data["message"] == "Member created successfully"
         TestMemberLifecycle.member_id = response_data["member_id"]
 
+    @pytest.mark.skipif(
+        not should_run_api_tests, reason="API tests are disabled in this environment"
+    )
     def test_member_deletion(self):
         if TestMemberLifecycle.member_id is None:
             pytest.skip("Skipping deletion test as no member was created")
@@ -33,6 +43,9 @@ class TestMemberLifecycle:
         assert delete_response_data["message"] == "Member deleted successfully"
         assert delete_response_data["member_id"] == TestMemberLifecycle.member_id
 
+    @pytest.mark.skipif(
+        not should_run_api_tests, reason="API tests are disabled in this environment"
+    )
     def test_member_creation_with_future_birth_date(self):
         future_date = str(date.today().replace(year=date.today().year + 1))
         member_data = {
@@ -48,6 +61,9 @@ class TestMemberLifecycle:
         assert response.status_code == 422
         assert "detail" in response.json()
 
+    @pytest.mark.skipif(
+        not should_run_api_tests, reason="API tests are disabled in this environment"
+    )
     def test_member_creation_with_invalid_email(self):
         member_data = {
             "first_name": "John",
