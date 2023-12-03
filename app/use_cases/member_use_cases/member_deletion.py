@@ -8,6 +8,6 @@ class MemberDeletionUseCase:
     def delete_member(self, member_id: str) -> int:
         member = self.member_repository.get_member(member_id)
         if member is None:
-            raise ValueError(f"Member with email {member_id} does not exist")
+            raise ValueError(f"Member with id {member_id} does not exist")
         member_id = self.member_repository.delete_member(member_id)
         return member_id
