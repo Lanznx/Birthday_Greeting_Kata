@@ -1,10 +1,16 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Response
+from fastapi.responses import PlainTextResponse
+from app.use_cases.ports.member_repository import IMemberRepository
+from app.use_cases.ports.greeting_service import IGreetingService
+from app.use_cases.ports.presenter import IPresenter
+from app.infra.dependencies import (
+    get_member_repository,
+    get_greeting_service,
+    get_presenter,
+)
 from app.use_cases.member_use_cases.send_birthday_greeting import (
     SendBirthdayGreetingUseCase,
 )
-from app.use_cases.ports.member_repository import IMemberRepository
-from app.use_cases.ports.greeting_service import IGreetingService
-from app.infra.dependencies import get_member_repository, get_greeting_service
 from app.use_cases.dtos.birthday_greeting_dto import (
     BirthdayGreetingInputDTO,
     BirthdayGreetingOutputDTOV1,
@@ -112,6 +118,38 @@ def send_birthday_greetings_v5(
         return BirthdayGreetingOutputDTOV1(
             message="Birthday greetings sent successfully", greetings=greetings
         )
+    except HTTPException as http_exc:
+        raise http_exc
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@greeting_routes.post("/v6/birthday", status_code=status.HTTP_200_OK)
+def send_birthday_greetings_v6(
+    today: BirthdayGreetingInputDTO,
+) -> Response:
+    try:
+        member_repository: IMemberRepository = get_member_repository()
+        greeting_service: IGreetingService = get_greeting_service("v1")
+        xml_presenter: IPresenter = get_presenter("xml")
+
+        use_case = SendBirthdayGreetingUseCase(member_repository, greeting_service)
+        greetings = use_case.execute(today.current_date)
+        if not greetings:
+            xml_error = xml_presenter.present_birthday_greeting(
+                BirthdayGreetingOutputDTOV1(
+                    message="No birthdays found today", greetings=[]
+                )
+            )
+            return Response(
+                content=xml_error, media_type="application/xml", status_code=404
+            )
+        xml_result = xml_presenter.present_birthday_greeting(
+            BirthdayGreetingOutputDTOV1(
+                message="Birthday greetings sent successfully", greetings=greetings
+            )
+        )
+        return Response(content=xml_result, media_type="application/xml")
     except HTTPException as http_exc:
         raise http_exc
     except Exception as e:
