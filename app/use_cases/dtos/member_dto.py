@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr, constr, field_validator
 from datetime import date
+from typing import Union
 
 
 class MemberInputDTO(BaseModel):
@@ -18,4 +19,4 @@ class MemberInputDTO(BaseModel):
 
 class MemberOutputDTO(BaseModel):
     message: str
-    member_id: int
+    member_id: Union[str, int]

@@ -4,10 +4,10 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_send_birthday_greetings_v1():
+def test_send_birthday_greetings_v5():
     request_data = {"current_date": "2023-08-08"}
 
-    response = client.post("/greeting/v1/birthday", json=request_data)
+    response = client.post("/greeting/v5/birthday", json=request_data)
 
     if response.status_code == 200:
         response_data = response.json()
