@@ -43,5 +43,5 @@ jobs:
         echo "SKIP_API_TESTS"
         echo $SKIP_API_TESTS
         echo $SKIP_API_TESTS
-        docker run --rm greeting:latest bash -c "bash scripts/run_test.sh"
+        docker run --rm -e SKIP_API_TESTS=true greeting:latest bash -c "bash scripts/run_test.sh"
 
