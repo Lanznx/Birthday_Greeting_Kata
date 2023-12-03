@@ -38,5 +38,4 @@ jobs:
     - name: Build Docker image & Run tests
       run: |
         docker build -t greeting:latest .
-        docker run --rm -e SKIP_API_TESTS=true greeting:latest bash -c "export PYTHONPATH=../Birthday_Greeting_Kata && pytest"
-
+        docker run --rm greeting:latest bash scripts/run_test.sh 

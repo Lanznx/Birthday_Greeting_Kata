@@ -18,4 +18,7 @@ WORKDIR /Birthday_Greeting_Kata
 
 EXPOSE 7070
 
+
+ENV SKIP_API_TESTS=true
+
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "7070"]
