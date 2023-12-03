@@ -4,6 +4,7 @@ from app.use_cases.dtos.birthday_greeting_dto import (
     BirthdayGreetingDTOV1,
     BirthdayGreetingDTOV2,
     BirthdayGreetingDTOV3,
+    BirthdayGreetingDTOV4,
 )
 from datetime import date
 from typing import List, Union
@@ -23,6 +24,7 @@ class SendBirthdayGreetingUseCase:
             BirthdayGreetingDTOV1,
             BirthdayGreetingDTOV2,
             BirthdayGreetingDTOV3,
+            BirthdayGreetingDTOV4,
         ]
     ]:
         greetings = []
