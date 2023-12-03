@@ -8,13 +8,13 @@ RUN apt-get update && apt-get install -y \
   build-essential \
   iputils-ping
 
-COPY requirements.txt /app/
+COPY requirements.txt /Birthday_Greeting_Kata/
 
-RUN pip install -r /app/requirements.txt
+RUN pip install -r /Birthday_Greeting_Kata/requirements.txt
 
-COPY . /app
+COPY . /Birthday_Greeting_Kata
 
-WORKDIR /app
+WORKDIR /Birthday_Greeting_Kata
 
 EXPOSE 7070
 
