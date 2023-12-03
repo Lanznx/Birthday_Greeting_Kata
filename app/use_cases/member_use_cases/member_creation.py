@@ -7,6 +7,7 @@ class MemberCreationUseCase:
     def __init__(self, member_repository: IMemberRepository):
         self.member_repository = member_repository
 
-    def add_member(self, member_data: MemberInputDTO):
+    def add_member(self, member_data: MemberInputDTO) -> int:
         member = Member(**member_data.model_dump())
-        return self.member_repository.create_member(member)
+        member_id = self.member_repository.create_member(member)
+        return member_id
