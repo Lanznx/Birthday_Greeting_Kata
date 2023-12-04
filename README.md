@@ -4,6 +4,7 @@
 ### About me - - - > https://tinyurl.com/self-introo
 
 ![Pre-assignment Clean Arcitecture](https://github.com/Lanznx/Birthday_Greeting_Kata/assets/96360357/df4f79c6-dba1-455d-b747-330ee1e0fb01)
+![image](https://github.com/Lanznx/Birthday_Greeting_Kata/assets/96360357/85e90de7-9d40-4fe2-869c-774baa9fb4a6)
 
 
 ## How to run
